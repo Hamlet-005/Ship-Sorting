@@ -50,7 +50,6 @@ public class Ship : MonoBehaviour
         if (isCompleted || slots.Length == 0)
             return false;
 
-        Debug.Log("Checking " + gameObject.name + " slots count: " + slots.Length);
 
         ContainerColor? color = null;
 
@@ -58,16 +57,8 @@ public class Ship : MonoBehaviour
         {
             if (slot.currentContainer == null)
             {
-                Debug.Log(gameObject.name + " NOT completed because " + slot.name + " is empty");
                 return false;
             }
-
-            Debug.Log(
-                gameObject.name + " / " +
-                slot.name + " has " +
-                slot.currentContainer.name + " color: " +
-                slot.currentContainer.containerColor
-            );
 
             if (color == null)
             {
@@ -75,20 +66,73 @@ public class Ship : MonoBehaviour
             }
             else if (slot.currentContainer.containerColor != color)
             {
-                Debug.Log(gameObject.name + " NOT completed because colors are different");
                 return false;
             }
         }
 
-        Debug.Log(gameObject.name + " IS COMPLETED");
         return true;
     }
 
     public void CompleteShip()
     {
         isCompleted = true;
-        Debug.Log(gameObject.name + " COMPLETED");
 
         gameObject.SetActive(false);
+    }
+
+    public List<Container> GetTopSameColorGroup(Container clickedContainer)
+    {
+        List<Container> result = new List<Container>();
+
+        if (clickedContainer == null)
+            return result;
+
+        int clickedIndex = -1;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].currentContainer == clickedContainer)
+            {
+                clickedIndex = i;
+                break;
+            }
+        }
+
+        if (clickedIndex == -1)
+            return result;
+
+        for (int i = clickedIndex + 1; i < slots.Length; i++)
+        {
+            if (slots[i].currentContainer != null)
+                return result;
+        }
+
+        ContainerColor color = clickedContainer.containerColor;
+
+        for (int i = clickedIndex; i >= 0; i--)
+        {
+            if (slots[i].currentContainer == null)
+                break;
+
+            if (slots[i].currentContainer.containerColor != color)
+                break;
+
+            result.Add(slots[i].currentContainer);
+        }
+
+        return result;
+    }
+
+    public bool CanAcceptColor(ContainerColor color)
+    {
+        for (int i = slots.Length - 1; i >= 0; i--)
+        {
+            if (slots[i].currentContainer != null)
+            {
+                return slots[i].currentContainer.containerColor == color;
+            }
+        }
+
+        return true;
     }
 }

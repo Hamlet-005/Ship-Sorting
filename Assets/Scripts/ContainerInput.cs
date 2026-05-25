@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ContainerInput : MonoBehaviour
 {
@@ -30,8 +31,12 @@ public class ContainerInput : MonoBehaviour
         selectedGroup.Clear();
         startPositions.Clear();
 
-        selectedGroup = selectedContainer.currentShip.GetContainersByColor(selectedContainer.containerColor);
-        Debug.Log("Selected group count: " + selectedGroup.Count);
+        selectedGroup = selectedContainer.currentShip.GetTopSameColorGroup(selectedContainer);
+        if (selectedGroup.Count == 0)
+        {
+            isDragging = false;
+            return;
+        }
 
         startSlots.Clear();
         startShips.Clear();
@@ -48,6 +53,9 @@ public class ContainerInput : MonoBehaviour
 
     void OnMouseUp()
     {
+        if (!isDragging || selectedGroup.Count == 0)
+            return;
+
         isDragging = false;
 
         Ship targetShip = FindClosestShipWithEmptySlot();
@@ -56,6 +64,25 @@ public class ContainerInput : MonoBehaviour
         {
             ReturnGroupBack();
             return;
+        }
+
+        NeutralShip neutral = targetShip.GetComponent<NeutralShip>();
+
+        if (neutral != null)
+        {
+            if (!neutral.CanAcceptColor(selectedContainer.containerColor))
+            {
+                ReturnGroupBack();
+                return;
+            }
+        }
+        else
+        {
+            if (!targetShip.CanAcceptColor(selectedContainer.containerColor))
+            {
+                ReturnGroupBack();
+                return;
+            }
         }
 
         List<ShipSlot> emptySlots = targetShip.GetEmptySlots();
@@ -78,17 +105,21 @@ public class ContainerInput : MonoBehaviour
                 Container c = selectedGroup[i];
 
                 c.transform.position = startPositions[i];
-
                 c.currentSlot = startSlots[i];
                 c.currentShip = startShips[i];
 
                 startSlots[i].currentContainer = c;
-
                 c.transform.SetParent(startSlots[i].transform);
             }
         }
 
         GameManager.Instance.UseMove();
+
+        if (neutral != null)
+        {
+            neutral.TryExchange();
+        }
+
         CheckCompletedShips();
         GameManager.Instance.CheckWin();
     }
@@ -128,7 +159,7 @@ public class ContainerInput : MonoBehaviour
         Ship[] ships = FindObjectsByType<Ship>(FindObjectsSortMode.None);
 
         Ship closestShip = null;
-        float closestDistance = 1.2f;
+        float closestDistance = 3f;
 
         Vector3 groupCenter = selectedGroup[0].transform.position;
         groupCenter.y = 0;
@@ -186,7 +217,12 @@ public class ContainerInput : MonoBehaviour
 
         Vector3 pos = targetSlot.transform.position;
         pos.y += 0.32f;
-        c.transform.position = pos;
+        c.transform.DOJump(
+            pos,
+            0.35f,
+            1,
+            0.25f
+        ).SetEase(Ease.OutQuad);
     }
 
     void CheckCompletedShips()

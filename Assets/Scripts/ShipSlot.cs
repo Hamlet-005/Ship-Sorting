@@ -8,11 +8,9 @@ public class ShipSlot : MonoBehaviour
     {
         if (currentContainer == null)
         {
-            Debug.Log(name + " is empty");
             return true;
         }
 
-        Debug.Log(name + " has " + currentContainer.name);
         return false;
     }
 }
