@@ -6,11 +6,6 @@ public class ShipSlot : MonoBehaviour
 
     public bool IsEmpty()
     {
-        if (currentContainer == null)
-        {
-            return true;
-        }
-
-        return false;
+        return currentContainer == null;
     }
 }

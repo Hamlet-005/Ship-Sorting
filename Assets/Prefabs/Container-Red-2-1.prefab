@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6925526669909192411}
   - component: {fileID: 8097691238527857115}
   - component: {fileID: 3382009006971614453}
-  - component: {fileID: 1808842569664222826}
   - component: {fileID: 1671183071970882409}
   m_Layer: 0
   m_Name: Container-Red-2-1
@@ -116,18 +115,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1808842569664222826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8877346225443648291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0fe84bc8cda940e7a0c7901f418bee7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ContainerInput
 --- !u!114 &1671183071970882409
 MonoBehaviour:
   m_ObjectHideFlags: 0

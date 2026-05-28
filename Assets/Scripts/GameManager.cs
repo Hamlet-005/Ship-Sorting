@@ -8,18 +8,23 @@ public class GameManager : MonoBehaviour
     public int movesLeft = 20;
     public TMP_Text movesText;
 
-    void Start()
-    {
-        UpdateMovesUI();
-    }
+    private bool gameEnded = false;
 
     void Awake()
     {
         Instance = this;
     }
 
+    void Start()
+    {
+        UpdateMovesUI();
+    }
+
     public void UseMove()
     {
+        if (gameEnded)
+            return;
+
         movesLeft--;
 
         UpdateMovesUI();
@@ -36,29 +41,43 @@ public class GameManager : MonoBehaviour
             movesText.text = "Moves: " + movesLeft;
     }
 
+    public void Win()
+    {
+        if (gameEnded)
+            return;
+
+        gameEnded = true;
+        Debug.Log("WIN");
+    }
+
     public void CheckWin()
     {
-        Ship[] ships = FindObjectsByType<Ship>(FindObjectsSortMode.None);
+        if (gameEnded)
+            return;
 
-        foreach (Ship ship in ships)
+        Container[] containers =
+            FindObjectsByType<Container>(FindObjectsSortMode.None);
+
+        foreach (Container container in containers)
         {
-            if (ship.isCompleted)
+            if (container.currentShip != null &&
+                container.currentShip.isCompleted)
+            {
                 continue;
+            }
 
-            if (ship.EmptySlotCount() != ship.slots.Length)
-                return;
+            return;
         }
 
         Win();
     }
 
-    public void Win()
-    {
-        Debug.Log("WIN");
-    }
-
     public void Lose()
     {
+        if (gameEnded)
+            return;
+
+        gameEnded = true;
         Debug.Log("LOSE");
     }
 }

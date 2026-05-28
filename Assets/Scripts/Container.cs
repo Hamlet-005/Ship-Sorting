@@ -5,7 +5,8 @@ public enum ContainerColor
     Yellow,
     Blue,
     Green,
-    Red
+    Red,
+    Orange
 }
 
 public class Container : MonoBehaviour
@@ -15,19 +16,24 @@ public class Container : MonoBehaviour
     public Ship currentShip;
     public ShipSlot currentSlot;
 
+    [Header("Visual")]
     public Renderer containerRenderer;
 
     public Material yellowMaterial;
     public Material blueMaterial;
     public Material greenMaterial;
     public Material redMaterial;
+    public Material orangeMaterial;
 
     public void SetColor(ContainerColor newColor)
     {
         containerColor = newColor;
 
         if (containerRenderer == null)
-            containerRenderer = GetComponent<Renderer>();
+            containerRenderer = GetComponentInChildren<Renderer>();
+
+        if (containerRenderer == null)
+            return;
 
         switch (newColor)
         {
@@ -45,6 +51,10 @@ public class Container : MonoBehaviour
 
             case ContainerColor.Red:
                 containerRenderer.material = redMaterial;
+                break;
+
+            case ContainerColor.Orange:
+                containerRenderer.material = orangeMaterial;
                 break;
         }
     }
