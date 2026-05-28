@@ -703,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add837650e14d453b8c02c8852b79912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Container
-  containerColor: 3
+  containerColor: 0
   currentShip: {fileID: 2002042720}
   currentSlot: {fileID: 1940536245}
   containerRenderer: {fileID: 0}
@@ -712,6 +712,9 @@ MonoBehaviour:
   greenMaterial: {fileID: 2100000, guid: ce963d56cec3a4f8ebb72368f4f91763, type: 2}
   redMaterial: {fileID: 2100000, guid: 2e0f337a602d4442c9dd84351942c47d, type: 2}
   orangeMaterial: {fileID: 2100000, guid: 7ab94c1a0dc524a04abf5ae39ce6e66f, type: 2}
+  isHidden: 0
+  realColor: 0
+  hiddenMaterial: {fileID: 0}
 --- !u!4 &433219712 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8037ce8fcb3144946885239fe54efa4e, type: 3}
@@ -1003,6 +1006,9 @@ MonoBehaviour:
   greenMaterial: {fileID: 2100000, guid: ce963d56cec3a4f8ebb72368f4f91763, type: 2}
   redMaterial: {fileID: 2100000, guid: 2e0f337a602d4442c9dd84351942c47d, type: 2}
   orangeMaterial: {fileID: 2100000, guid: 7ab94c1a0dc524a04abf5ae39ce6e66f, type: 2}
+  isHidden: 0
+  realColor: 3
+  hiddenMaterial: {fileID: 0}
 --- !u!1001 &793732955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1571,7 +1577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add837650e14d453b8c02c8852b79912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Container
-  containerColor: 3
+  containerColor: 0
   currentShip: {fileID: 2002042720}
   currentSlot: {fileID: 1595569130}
   containerRenderer: {fileID: 0}
@@ -1580,6 +1586,9 @@ MonoBehaviour:
   greenMaterial: {fileID: 2100000, guid: ce963d56cec3a4f8ebb72368f4f91763, type: 2}
   redMaterial: {fileID: 2100000, guid: 2e0f337a602d4442c9dd84351942c47d, type: 2}
   orangeMaterial: {fileID: 2100000, guid: 7ab94c1a0dc524a04abf5ae39ce6e66f, type: 2}
+  isHidden: 0
+  realColor: 0
+  hiddenMaterial: {fileID: 0}
 --- !u!4 &1127882387 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8037ce8fcb3144946885239fe54efa4e, type: 3}
@@ -2305,6 +2314,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 50a2675eb9e2346c99a7b216f9559e5a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 589f46296604945a683b93547ff75850, type: 2}
     - target: {fileID: 919132149155446097, guid: 50a2675eb9e2346c99a7b216f9559e5a, type: 3}
       propertyPath: m_Name
       value: cargo_red-1-4
@@ -2553,7 +2566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add837650e14d453b8c02c8852b79912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Container
-  containerColor: 3
+  containerColor: 0
   currentShip: {fileID: 2002042720}
   currentSlot: {fileID: 204607962}
   containerRenderer: {fileID: 0}
@@ -2562,6 +2575,9 @@ MonoBehaviour:
   greenMaterial: {fileID: 2100000, guid: ce963d56cec3a4f8ebb72368f4f91763, type: 2}
   redMaterial: {fileID: 2100000, guid: 2e0f337a602d4442c9dd84351942c47d, type: 2}
   orangeMaterial: {fileID: 2100000, guid: 7ab94c1a0dc524a04abf5ae39ce6e66f, type: 2}
+  isHidden: 0
+  realColor: 0
+  hiddenMaterial: {fileID: 0}
 --- !u!4 &1710930777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8037ce8fcb3144946885239fe54efa4e, type: 3}
@@ -3097,6 +3113,9 @@ MonoBehaviour:
   greenMaterial: {fileID: 2100000, guid: ce963d56cec3a4f8ebb72368f4f91763, type: 2}
   redMaterial: {fileID: 2100000, guid: 2e0f337a602d4442c9dd84351942c47d, type: 2}
   orangeMaterial: {fileID: 2100000, guid: 7ab94c1a0dc524a04abf5ae39ce6e66f, type: 2}
+  isHidden: 1
+  realColor: 3
+  hiddenMaterial: {fileID: 2100000, guid: 589f46296604945a683b93547ff75850, type: 2}
 --- !u!4 &2002535725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 50a2675eb9e2346c99a7b216f9559e5a, type: 3}

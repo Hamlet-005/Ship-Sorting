@@ -63,6 +63,9 @@ public class Ship : MonoBehaviour
         if (clickedContainer == null)
             return result;
 
+        if (clickedContainer.isHidden)
+            return result;
+
         int clickedIndex = -1;
 
         for (int i = 0; i < slots.Length; i++)
@@ -81,21 +84,25 @@ public class Ship : MonoBehaviour
 
         for (int i = clickedIndex + 1; i < slots.Length; i++)
         {
-            if (slots[i].currentContainer == null)
+            Container container = slots[i].currentContainer;
+
+            if (container == null)
                 continue;
 
-            if (slots[i].currentContainer.containerColor != color)
+            if (container.isHidden || container.containerColor != color)
                 return result;
         }
 
         for (int i = slots.Length - 1; i >= 0; i--)
         {
-            if (slots[i].currentContainer == null)
+            Container container = slots[i].currentContainer;
+
+            if (container == null)
                 continue;
 
-            if (slots[i].currentContainer.containerColor == color)
+            if (!container.isHidden && container.containerColor == color)
             {
-                result.Add(slots[i].currentContainer);
+                result.Add(container);
             }
             else
             {
@@ -149,8 +156,13 @@ public class Ship : MonoBehaviour
 
         isCompleted = true;
 
+        ShipFloat shipFloat = GetComponent<ShipFloat>();
+
+        if (shipFloat != null)
+            shipFloat.enabled = false;
+
         Vector3 startPos = transform.position;
-        Vector3 forwardExit = startPos + new Vector3(0f, 0f, 9f);
+        Vector3 forwardExit = startPos + new Vector3(0f, 0f, 25f);
 
         bool shipInFront = Physics.Raycast(
             startPos + Vector3.up * 0.5f,
@@ -173,27 +185,32 @@ public class Ship : MonoBehaviour
         {
             float sideDirection = startPos.x < 0 ? -1f : 1f;
 
-            Vector3 sideStep =
-                startPos + new Vector3(2.2f * sideDirection, 0f, 1.5f);
+            Vector3 backAndTurn =
+                startPos + new Vector3(0f, 0f, -1.2f);
+
+            float turnAngle = 18f * sideDirection;
+
+            Vector3 finalRotation =
+                transform.eulerAngles + new Vector3(0f, turnAngle, 0f);
+
+            Vector3 exitDirection =
+                Quaternion.Euler(0f, turnAngle, 0f) * Vector3.forward;
 
             Vector3 exitPos =
-                startPos + new Vector3(4.5f * sideDirection, 0f, 9f);
+                backAndTurn + exitDirection * 18f;
 
             sequence.Append(
-                transform.DOMove(sideStep, 0.8f)
-                    .SetEase(Ease.OutQuad)
+                transform.DOMove(backAndTurn, 1.0f)
+                    .SetEase(Ease.InOutSine)
             );
 
             sequence.Join(
-                transform.DORotate(
-                    transform.eulerAngles +
-                    new Vector3(0f, 10f * sideDirection, 0f),
-                    1.1f
-                )
+                transform.DORotate(finalRotation, 1.0f)
+                    .SetEase(Ease.InOutSine)
             );
 
             sequence.Append(
-                transform.DOMove(exitPos, 2.2f)
+                transform.DOMove(exitPos, 3.5f)
                     .SetEase(Ease.InOutSine)
             );
         }
@@ -204,5 +221,15 @@ public class Ship : MonoBehaviour
 
             GameManager.Instance.CheckWin();
         });
+    }
+
+    public void RevealTopHiddenContainer()
+    {
+        Container top = GetTopContainer();
+
+        if (top != null && top.isHidden)
+        {
+            top.Reveal();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public enum ContainerColor
 {
@@ -24,6 +25,11 @@ public class Container : MonoBehaviour
     public Material greenMaterial;
     public Material redMaterial;
     public Material orangeMaterial;
+
+    [Header("Question Container")]
+    public bool isHidden = false;
+    public ContainerColor realColor;
+    public Material hiddenMaterial;
 
     public void SetColor(ContainerColor newColor)
     {
@@ -57,5 +63,58 @@ public class Container : MonoBehaviour
                 containerRenderer.material = orangeMaterial;
                 break;
         }
+    }
+
+    public void SetHidden(ContainerColor hiddenRealColor)
+    {
+        isHidden = true;
+        realColor = hiddenRealColor;
+
+        if (containerRenderer == null)
+            containerRenderer = GetComponentInChildren<Renderer>();
+
+        if (containerRenderer != null && hiddenMaterial != null)
+            containerRenderer.material = hiddenMaterial;
+    }
+
+    public void Reveal()
+    {
+        if (!isHidden)
+            return;
+
+        isHidden = false;
+
+        transform.DOPunchScale(
+            new Vector3(0.25f, 0.25f, 0.25f),
+            0.25f,
+            1,
+            0.5f
+        );
+
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(
+            transform.DOScale(
+                Vector3.zero,
+                0.12f
+            ).SetEase(Ease.InBack)
+        );
+
+        seq.AppendCallback(() =>
+        {
+            SetColor(realColor);
+        });
+
+        seq.Append(
+            transform.DOScale(
+                Vector3.one,
+                0.18f
+            ).SetEase(Ease.OutBack)
+        );
+    }
+
+    public bool IsRevealed()
+    {
+        return !isHidden;
     }
 }

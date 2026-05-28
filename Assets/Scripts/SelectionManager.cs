@@ -24,6 +24,9 @@ public class SelectionManager : MonoBehaviour
         if (clickedShip == null)
             return;
 
+        if (clickedShip.isCompleted)
+            return;
+
         if (selectedShip == null)
         {
             SelectShip(clickedShip);
@@ -80,7 +83,8 @@ public class SelectionManager : MonoBehaviour
 
         if (neutral != null)
         {
-            if (!neutral.CanAcceptColor(selectedGroup[0].containerColor))
+            if (selectedGroup[0].isHidden ||
+                !neutral.CanAcceptColor(selectedGroup[0].containerColor))
             {
                 ReturnContainers();
                 return;
@@ -150,8 +154,11 @@ public class SelectionManager : MonoBehaviour
         }
 
         GameManager.Instance.UseMove();
+
+        selectedShip.RevealTopHiddenContainer();
+        targetShip.RevealTopHiddenContainer();
+
         CheckCompletedShips();
-        GameManager.Instance.CheckWin();
 
         if (neutral != null)
         {
@@ -200,6 +207,5 @@ public class SelectionManager : MonoBehaviour
                 ship.CompleteShip();
             }
         }
-        GameManager.Instance.CheckWin();
     }
 }

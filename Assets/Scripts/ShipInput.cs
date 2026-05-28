@@ -13,6 +13,12 @@ public class ShipInput : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (ship == null)
+            return;
+
+        if (ship.isCompleted)
+            return;
+
         if (SelectionManager.Instance == null)
             return;
 
