@@ -1,0 +1,10 @@
+# ninja log v5
+40	6227	8017742205834507	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	f4ae20027eb59f8
+76	6253	8017742205924629	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	a4e311d9cdf5afa8
+12	6287	8017742206437742	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	1dab9f5d3e99769b
+98	6310	8017742206703028	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	ff97e25885d8149b
+25	6435	8017742207904577	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	424d0e444f94a740
+121	6703	8017742210732413	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	3930538a67c9677e
+57	6753	8017742211259824	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	9863b6640790bd30
+1	6891	8017742212611673	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	784207b1e37c0160
+6892	7089	8017742214642420	C:/Users/meruz/Documents/GitHub/NailGame1/Ship-Sorting/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/266622j5/obj/arm64-v8a/libgame.so	a2e50d841cd71b0d

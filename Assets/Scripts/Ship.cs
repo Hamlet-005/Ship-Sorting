@@ -6,11 +6,18 @@ public class Ship : MonoBehaviour
 {
     public ShipSlot[] slots;
 
+    private AudioManager audioManager;
+
     public bool isCompleted = false;
 
     void Awake()
     {
         slots = GetComponentsInChildren<ShipSlot>(true);
+    }
+
+    private void Start()
+    {
+        if (FindAnyObjectByType<AudioManager>() != null) audioManager = FindAnyObjectByType<AudioManager>();
     }
 
     public List<ShipSlot> GetEmptySlots()
@@ -173,6 +180,8 @@ public class Ship : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
 
         sequence.AppendInterval(1f);
+
+        audioManager.PlayShipSound();
 
         if (!shipInFront)
         {

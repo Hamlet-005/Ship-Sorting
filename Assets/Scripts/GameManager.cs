@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public Sprite soundOffSprite;
 
     private bool soundEnabled = true;
+    private AudioManager audioManager;
 
     public GameObject pauseButton;
 
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     public int movesLeft = 20;
     public TMP_Text movesText;
+
 
     private bool gameEnded = false;
 
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         AutoFindUIReferences();
 
+        if (FindAnyObjectByType<AudioManager>() != null) audioManager = FindAnyObjectByType<AudioManager>();
         if (pausePanel != null) pausePanel.SetActive(false);
         if (winPanel != null) winPanel.SetActive(false);
         if (losePanel != null) losePanel.SetActive(false);
@@ -100,6 +103,8 @@ public class GameManager : MonoBehaviour
         if (pauseButton != null)
             pauseButton.SetActive(false);
 
+        audioManager.PlayWinSound();
+
         if (winPanel != null)
         {
             winPanel.SetActive(true);
@@ -146,6 +151,8 @@ public class GameManager : MonoBehaviour
 
         if (pauseButton != null)
             pauseButton.SetActive(false);
+
+        audioManager.PlayLoseSound();
 
         if (losePanel != null)
         {

@@ -14,9 +14,16 @@ public class SelectionManager : MonoBehaviour
     private Vector3 liftOffset =
         new Vector3(0, 0.5f, 0);
 
+    private AudioManager audioManager;
+
     void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        if (FindAnyObjectByType<AudioManager>() != null) audioManager = FindAnyObjectByType<AudioManager>();
     }
 
     public void OnShipClicked(Ship clickedShip)
@@ -44,6 +51,8 @@ public class SelectionManager : MonoBehaviour
 
     void SelectShip(Ship ship)
     {
+        audioManager.PlayClickSound();
+
         Container topContainer =
             ship.GetTopContainer();
 
