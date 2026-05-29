@@ -50,6 +50,7 @@ MonoBehaviour:
   soundButtonImage: {fileID: 0}
   soundOnSprite: {fileID: 21300000, guid: efe67774009c944d4991c95a814a6a14, type: 3}
   soundOffSprite: {fileID: 21300000, guid: 9837604732427407c9525cf227d1ce91, type: 3}
+  pauseButton: {fileID: 7108138244673772304, guid: 6bb199d3b31d548239e33c5ff69329f3, type: 3}
   isPaused: 0
   movesLeft: 10
   movesText: {fileID: 1115878906717459547, guid: 1e775be6b51d041f9888d8e5b578ea1f, type: 3}
