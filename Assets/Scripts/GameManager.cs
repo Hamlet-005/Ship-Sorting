@@ -12,10 +12,10 @@ public class GameManager : MonoBehaviour
     public GameObject losePanel;
     public static GameManager Instance;
 
-    public Image soundButtonImage;
-
     public Sprite soundOnSprite;
     public Sprite soundOffSprite;
+    private GameObject soundButtonObject;
+    private Image soundButtonImage;
 
     private bool soundEnabled = true;
     private AudioManager audioManager;
@@ -34,16 +34,35 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        Application.targetFrameRate = 60;
     }
 
     void Start()
     {
         AutoFindUIReferences();
 
-        if (FindAnyObjectByType<AudioManager>() != null) audioManager = FindAnyObjectByType<AudioManager>();
+        if (FindAnyObjectByType<AudioManager>() != null)
+            audioManager = FindAnyObjectByType<AudioManager>();
+
         if (pausePanel != null) pausePanel.SetActive(false);
         if (winPanel != null) winPanel.SetActive(false);
         if (losePanel != null) losePanel.SetActive(false);
+
+        if (soundButtonImage == null)
+        {
+            Image[] allImages = FindObjectsByType<Image>(FindObjectsSortMode.None);
+            foreach (Image img in allImages)
+            {
+                if (img.gameObject.name == "SoundOn/OffButton")
+                {
+                    soundButtonImage = img;
+                    break;
+                }
+            }
+        }
+
+        if (soundButtonObject != null)
+            soundButtonImage = soundButtonObject.GetComponent<Image>();
 
         UpdateMovesUI();
     }
@@ -90,6 +109,32 @@ public class GameManager : MonoBehaviour
             if (movesObj != null)
                 movesText = movesObj.GetComponent<TMPro.TMP_Text>();
         }
+
+        if (soundButtonObject == null)
+        {
+            Transform found = FindInChildren(
+                GameObject.Find("Canvas")?.transform,
+                "SoundOn/OffButton"
+            );
+            if (found != null)
+                soundButtonObject = found.gameObject;
+        }
+
+        if (soundButtonObject != null)
+            soundButtonImage = soundButtonObject.GetComponent<Image>();
+
+    }
+
+    Transform FindInChildren(Transform parent, string name)
+    {
+        if (parent == null) return null;
+        foreach (Transform child in parent)
+        {
+            if (child.name == name) return child;
+            Transform found = FindInChildren(child, name);
+            if (found != null) return found;
+        }
+        return null;
     }
 
     public void Win()
@@ -103,7 +148,10 @@ public class GameManager : MonoBehaviour
         if (pauseButton != null)
             pauseButton.SetActive(false);
 
-        audioManager.PlayWinSound();
+        if (audioManager != null) audioManager.PlayWinSound();
+
+        int stars = winPanel.GetComponentInChildren<StarDisplay>().CalculateStars(movesLeft);
+        SaveStars(stars);
 
         if (winPanel != null)
         {
@@ -113,10 +161,15 @@ public class GameManager : MonoBehaviour
 
             winPanel.transform
                 .DOScale(Vector3.one, 0.35f)
-                .SetEase(Ease.OutBack);
+                .SetEase(Ease.OutBack)
+                .OnComplete(() =>
+                {
+                    StarDisplay starDisplay = winPanel.GetComponentInChildren<StarDisplay>();
+                    if (starDisplay != null)
+                        starDisplay.ShowStars(stars);
+                });
         }
     }
-
 
 
     public void CheckWin()
@@ -207,15 +260,11 @@ public class GameManager : MonoBehaviour
     {
         soundEnabled = !soundEnabled;
 
-        AudioListener.volume =
-            soundEnabled ? 1f : 0f;
+        AudioListener.volume = soundEnabled ? 1f : 0f;
 
         if (soundButtonImage != null)
         {
-            soundButtonImage.sprite =
-                soundEnabled
-                ? soundOnSprite
-                : soundOffSprite;
+            soundButtonImage.sprite = soundEnabled ? soundOnSprite : soundOffSprite;
         }
     }
 
@@ -233,6 +282,28 @@ public class GameManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene("MainMenu");
+        }
+    }
+
+    public int GetStars()
+    {
+        int third = movesLeft / 3;
+
+        if (movesLeft >= third * 2) return 3;
+        if (movesLeft >= third) return 2;
+        return 1;
+    }
+
+    public void SaveStars(int stars)
+    {
+        int level = SceneManager.GetActiveScene().buildIndex;
+        string key = "Stars_Level_" + level;
+
+        int current = PlayerPrefs.GetInt(key, 0);
+        if (stars > current)
+        {
+            PlayerPrefs.SetInt(key, stars);
+            PlayerPrefs.Save();
         }
     }
 }

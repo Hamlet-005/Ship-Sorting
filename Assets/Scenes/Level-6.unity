@@ -3333,6 +3333,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1205968088}
   m_SourcePrefab: {fileID: 100100000, guid: 9610c4ed0b2ab48cf89fc44937f44cb3, type: 3}
+--- !u!114 &1379622231 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 97078729026491221, guid: 69f7ba660c514554a974fd57e2a03d6d, type: 3}
+  m_PrefabInstance: {fileID: 2104340285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1393641838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3409,6 +3420,10 @@ PrefabInstance:
       propertyPath: pauseButton
       value: 
       objectReference: {fileID: 1689464799}
+    - target: {fileID: 8650260857732127623, guid: f8473da3e2747480dadacf25f00bb7a3, type: 3}
+      propertyPath: soundButtonImage
+      value: 
+      objectReference: {fileID: 1379622231}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

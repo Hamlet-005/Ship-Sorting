@@ -51,10 +51,16 @@ public class SelectionManager : MonoBehaviour
 
     void SelectShip(Ship ship)
     {
-        audioManager.PlayClickSound();
+        if (ship == null)
+            return;
 
-        Container topContainer =
-            ship.GetTopContainer();
+        if (ship.isCompleted)
+            return;
+
+        if (audioManager != null)
+            audioManager.PlayClickSound();
+
+        Container topContainer = ship.GetTopContainer();
 
         if (topContainer == null)
             return;
@@ -62,7 +68,7 @@ public class SelectionManager : MonoBehaviour
         List<Container> movable =
             ship.GetTopSameColorGroup(topContainer);
 
-        if (movable.Count == 0)
+        if (movable == null || movable.Count == 0)
             return;
 
         selectedShip = ship;
@@ -70,13 +76,13 @@ public class SelectionManager : MonoBehaviour
 
         foreach (Container c in selectedGroup)
         {
+            if (c == null)
+                continue;
+
             Vector3 targetPos =
                 c.transform.position + liftOffset;
 
-            c.transform.DOMove(
-                targetPos,
-                0.18f
-            );
+            c.transform.DOMove(targetPos, 0.18f);
         }
     }
 

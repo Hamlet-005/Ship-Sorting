@@ -8,6 +8,10 @@ public class NeutralShip : MonoBehaviour
     public Container outputContainerPrefab;
     public ContainerColor outputColor = ContainerColor.Yellow;
     public Ship outputShip;
+    public int outputCount = 1;
+    public ContainerColor acceptedColor = ContainerColor.Yellow;
+    public bool useAcceptedColor = true;
+
 
     void Awake()
     {
@@ -16,6 +20,9 @@ public class NeutralShip : MonoBehaviour
 
     public bool CanAcceptColor(ContainerColor color)
     {
+        if (useAcceptedColor)
+            return color == acceptedColor;
+
         return color != outputColor;
     }
 
@@ -86,39 +93,40 @@ public class NeutralShip : MonoBehaviour
         if (emptySlots.Count == 0)
             return;
 
-        ShipSlot targetSlot = emptySlots[0];
+        int spawnCount = Mathf.Min(outputCount, emptySlots.Count);
 
-        Container newContainer = Instantiate(outputContainerPrefab);
+        for (int i = 0; i < spawnCount; i++)
+        {
+            ShipSlot targetSlot = emptySlots[i];
 
-        newContainer.SetColor(outputColor);
+            Container newContainer = Instantiate(outputContainerPrefab);
+            newContainer.SetColor(outputColor);
+            newContainer.currentShip = outputShip;
+            newContainer.currentSlot = targetSlot;
+            targetSlot.currentContainer = newContainer;
 
-        newContainer.currentShip = outputShip;
-        newContainer.currentSlot = targetSlot;
-        targetSlot.currentContainer = newContainer;
+            Vector3 startPos = transform.position;
+            startPos.y += 0.8f;
+            Vector3 finalWorldPos = targetSlot.transform.position;
 
-        Vector3 finalScale = Vector3.one;
+            newContainer.transform.SetParent(null);
+            newContainer.transform.position = startPos;
+            newContainer.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+            newContainer.transform.localScale = Vector3.one;
 
-        newContainer.transform.SetParent(null);
+            float delay = i * 0.15f;
 
-        Vector3 startPos = transform.position;
-        startPos.y += 0.8f;
-
-        Vector3 finalWorldPos = targetSlot.transform.position;
-
-        newContainer.transform.position = startPos;
-        newContainer.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
-        newContainer.transform.localScale = finalScale;
-
-        newContainer.transform
-            .DOJump(finalWorldPos, 0.8f, 1, 0.45f)
-            .SetEase(Ease.OutQuad)
-            .OnComplete(() =>
-            {
-                newContainer.transform.SetParent(targetSlot.transform, false);
-
-                newContainer.transform.localPosition = new Vector3(0f, 0f, 0.11f);
-                newContainer.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
-                newContainer.transform.localScale = Vector3.one;
-            });
+            newContainer.transform
+                .DOJump(finalWorldPos, 0.8f, 1, 0.45f)
+                .SetDelay(delay)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() =>
+                {
+                    newContainer.transform.SetParent(targetSlot.transform, false);
+                    newContainer.transform.localPosition = new Vector3(0f, 0f, 0.11f);
+                    newContainer.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                    newContainer.transform.localScale = Vector3.one;
+                });
+        }
     }
 }

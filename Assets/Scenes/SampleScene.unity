@@ -703,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add837650e14d453b8c02c8852b79912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Container
-  containerColor: 0
+  containerColor: 3
   currentShip: {fileID: 2002042720}
   currentSlot: {fileID: 1940536245}
   containerRenderer: {fileID: 0}
@@ -1261,6 +1261,9 @@ MonoBehaviour:
   outputContainerPrefab: {fileID: 2002535722}
   outputColor: 0
   outputShip: {fileID: 880480495}
+  outputCount: 3
+  acceptedColor: 1
+  useAcceptedColor: 1
 --- !u!1001 &945028661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1577,7 +1580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add837650e14d453b8c02c8852b79912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Container
-  containerColor: 0
+  containerColor: 3
   currentShip: {fileID: 2002042720}
   currentSlot: {fileID: 1595569130}
   containerRenderer: {fileID: 0}
@@ -2566,7 +2569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add837650e14d453b8c02c8852b79912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Container
-  containerColor: 0
+  containerColor: 3
   currentShip: {fileID: 2002042720}
   currentSlot: {fileID: 204607962}
   containerRenderer: {fileID: 0}
@@ -2820,6 +2823,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb9bd52ec654498fac7a3d7c377bd3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  pausePanel: {fileID: 0}
+  winPanel: {fileID: 0}
+  losePanel: {fileID: 0}
+  soundOnSprite: {fileID: 0}
+  soundOffSprite: {fileID: 0}
+  pauseButton: {fileID: 0}
+  isPaused: 0
   movesLeft: 3
   movesText: {fileID: 1118670071}
 --- !u!1001 &1847670966

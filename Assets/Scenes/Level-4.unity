@@ -2035,6 +2035,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 815176484}
     - target: {fileID: 8650260857732127623, guid: f8473da3e2747480dadacf25f00bb7a3, type: 3}
+      propertyPath: movesLeft
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8650260857732127623, guid: f8473da3e2747480dadacf25f00bb7a3, type: 3}
       propertyPath: movesText
       value: 
       objectReference: {fileID: 333354447}
